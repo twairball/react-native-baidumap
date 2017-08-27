@@ -1,19 +1,19 @@
-'use strict';
+import React, {
+  Component,
+  PropTypes
+} from 'react';
 
-import React from 'react';
-
-
-import ReactNative, {
-    EdgeInsetsPropType,
-    Image,
-    NativeMethodsMixin,
-    Platform,
-    requireNativeComponent,
-    StyleSheet,
-    View,
-    UIManager,
-    processColor,
-    ColorPropType,
+import {
+  EdgeInsetsPropType,
+  Image,
+  NativeMethodsMixin,
+  Platform,
+  requireNativeComponent,
+  StyleSheet,
+  View,
+  UIManager,
+  processColor,
+  ColorPropType,
 } from 'react-native';
 
 import deprecatedPropType from 'react-native/Libraries/Utilities/deprecatedPropType';
@@ -36,11 +36,11 @@ export type MAAnnotationDragState = $Enum<{
 //         return <View></View>;
 //     }
 // }
-const BaiduMapView= React.createClass({
+export default class BaiduMapView extends Component {
 
-  mixins: [NativeMethodsMixin],
+  static mixins = [NativeMethodsMixin]
 
-  propTypes: {
+  static propTypes = {
     ...View.propTypes,
     /**
      * Used to style and layout the `MapView`.  See `StyleSheet.js` and
@@ -337,10 +337,10 @@ const BaiduMapView= React.createClass({
      * @platform android
      */
     active: React.PropTypes.bool,
-  },
+  }
 
 
-  render: function() {
+  render() {
     let children = [], {annotations, overlays, followUserLocation, userLocationViewParams, showsZoomControl} = this.props;
     annotations = annotations && annotations.map((annotation: Object) => {
       let {
@@ -531,7 +531,7 @@ const BaiduMapView= React.createClass({
           [locs]
       );
   },
-});
+}
 
 const styles = StyleSheet.create({
   annotationView: {
