@@ -341,7 +341,8 @@ export default class BaiduMapView extends Component {
 
 
   render() {
-    let children = [], {annotations, overlays, followUserLocation, userLocationViewParams, showsZoomControl} = this.props;
+    let children = []
+    let {annotations, overlays, followUserLocation, userLocationViewParams, showsZoomControl} = this.props;
     annotations = annotations && annotations.map((annotation: Object) => {
       let {
         id,
@@ -516,7 +517,7 @@ export default class BaiduMapView extends Component {
           userLocationViewParams={userLocationViewParams}
       />
     );
-  },
+  }
 
   zoomToLocs(locs) {
       if (!Array.isArray(locs) && Object.prototype.toString.call(locs) === '[object Object]') {
@@ -530,7 +531,7 @@ export default class BaiduMapView extends Component {
           UIManager.RCTBaiduMap.Commands.zoomToLocs,
           [locs]
       );
-  },
+  }
 }
 
 const styles = StyleSheet.create({

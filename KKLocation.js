@@ -9,12 +9,12 @@
  * @providesModule KKLocation
  * @flow
  */
-'use strict';
 
 import React from 'react';
+import { Component, DeviceEventEmitter, NativeModules} from 'react-native'
 
-var RCTDeviceEventEmitter = React.DeviceEventEmitter;
-var KKLocationObserver = React.NativeModules.KKLocationObserver;
+var RCTDeviceEventEmitter = DeviceEventEmitter;
+var KKLocationObserver = NativeModules.KKLocationObserver;
 
 
 var subscriptions = [];
@@ -44,13 +44,13 @@ type GeoOptions = {
  * `<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />`
  *
  */
-var KKLocation = {
+export default class KKLocation extends Component {
 
   /*
    * Invokes the success callback once with the latest location info.  Supported
    * options: timeout (ms), maximumAge (ms), enableHighAccuracy (bool)
    */
-  getCurrentPosition: function(
+  getCurrentPosition(
     geo_success: Function,
     geo_error?: Function,
     geo_options?: GeoOptions
@@ -60,13 +60,13 @@ var KKLocation = {
       geo_success,
       geo_error || console.error
     );
-  },
+  }
 
   /*
    * Invokes the success callback whenever the location changes.  Supported
    * options: timeout (ms), maximumAge (ms), enableHighAccuracy (bool), distanceFilter(m)
    */
-  watchPosition: function(success: Function, error?: Function, options?: GeoOptions): number {
+  watchPosition(success: Function, error?: Function, options?: GeoOptions): number {
     if (!updatesEnabled) {
       KKLocationObserver.startObserving(options || {});
       updatesEnabled = true;
@@ -83,9 +83,9 @@ var KKLocation = {
       ) : null,
     ]);
     return watchID;
-  },
+  }
 
-  clearWatch: function(watchID: number) {
+  clearWatch(watchID: number) {
     var sub = subscriptions[watchID];
     if (!sub) {
       // Silently exit when the watchID is invalid or already cleared
@@ -106,9 +106,9 @@ var KKLocation = {
     if (noWatchers) {
       KKLocation.stopObserving();
     }
-  },
+  }
 
-  stopObserving: function() {
+  stopObserving() {
     if (updatesEnabled) {
       RCTLocationObserver.stopObserving();
       updatesEnabled = false;
@@ -124,5 +124,3 @@ var KKLocation = {
     }
   }
 };
-
-module.exports = KKLocation;
